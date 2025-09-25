@@ -13,7 +13,7 @@ const TeacherPage: React.FC = () => {
   const [poll, setPoll] = useState<any>(null);
   const [results, setResults] = useState<any[]>([]);
   const [sessionId, setSessionId] = useState<string | null>(null);
-  const [showHistory, setShowHistory] = useState(false);
+	// removed unused showHistory state
 
   const handleOptionChange = (i: number, value: string) => {
     setOptions(options.map((opt, idx) => (idx === i ? value : opt)));
@@ -41,8 +41,8 @@ const TeacherPage: React.FC = () => {
   };
 
   useEffect(() => {
-    // Create session for teacher on mount
-    const teacherName = 'Teacher'; // You can make this dynamic if needed
+		// Create a fresh session for teacher on each mount/tab
+		const teacherName = `Teacher-${Date.now()}`;
     fetch('/api/session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -51,24 +51,40 @@ const TeacherPage: React.FC = () => {
       .then(res => res.json())
       .then(data => setSessionId(data.session.id));
 
-    socket.on('poll:started', (pollData) => {
-      setPoll(pollData);
-      setResults([]);
-      setAsking(false);
-    });
-    socket.on('poll:results', (payload) => {
-      setResults(payload.results || []);
-    });
-    socket.on('poll:ended', () => {
-      setPoll(null);
-      setResults([]);
-    });
-    return () => {
-      socket.off('poll:started');
-      socket.off('poll:results');
-      socket.off('poll:ended');
-    };
-  }, []);
+		// Guard socket events to only accept for current session when available
+		const onPollStarted = (pollData: any) => {
+			if (pollData?.sessionId && sessionId && pollData.sessionId !== sessionId) return;
+			setPoll(pollData);
+			setResults([]);
+			setAsking(false);
+		};
+		const onPollResults = (payload: any) => {
+			if (payload?.sessionId && sessionId && payload.sessionId !== sessionId) return;
+			setResults(payload.results || []);
+		};
+		const onPollEnded = (payload?: any) => {
+			if (payload?.sessionId && sessionId && payload.sessionId !== sessionId) return;
+			setPoll(null);
+			setResults([]);
+		};
+
+		socket.on('poll:started', onPollStarted);
+		socket.on('poll:results', onPollResults);
+		socket.on('poll:ended', onPollEnded);
+
+		// End any active poll if the tab/window is closed to avoid carryover
+		const handleBeforeUnload = () => {
+			try { socket.emit('teacher:endPoll'); } catch {}
+		};
+		window.addEventListener('beforeunload', handleBeforeUnload);
+
+		return () => {
+			socket.off('poll:started', onPollStarted);
+			socket.off('poll:results', onPollResults);
+			socket.off('poll:ended', onPollEnded);
+			window.removeEventListener('beforeunload', handleBeforeUnload);
+		};
+	}, [sessionId]);
 
   if (!poll) {
     return (
