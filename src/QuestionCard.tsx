@@ -1,4 +1,3 @@
-import React from 'react';
 
 type OptionView = { id: string; text: string; percent: number };
 
