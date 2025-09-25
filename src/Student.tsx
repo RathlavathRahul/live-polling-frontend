@@ -4,11 +4,30 @@ import { socket } from './lib/socket';
 import { useApp } from './store/app';
 import { ClipLoader
 } from 'react-spinners';
+import {  PiSparkleFill } from "react-icons/pi";
 
 
 const Loader = () => (
   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#fff' }}>
-    <button style={{ background: '#6C4DFF', color: '#fff', borderRadius: '16px', padding: '4px 16px', border: 'none', marginBottom: '24px', fontWeight: 500, fontSize: '12px' }}>✦ Intervue Poll</button>
+      <button
+  style={{
+    background: "linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%)",
+    color: "#fff",
+    borderRadius: "999px",      // makes it fully rounded like your screenshot
+    padding: "6px 18px",
+    border: "none",
+    fontWeight: 600,
+    fontSize: "13px",
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+    cursor: "pointer",
+     marginBottom: '10px'
+  }}
+>
+  <PiSparkleFill size={14} />
+  Intervue Poll
+</button>
     <div style={{ marginBottom: '16px' }}>
       <ClipLoader
  color="#6C4DFF" />
@@ -21,7 +40,25 @@ const Lobby = ({ initialName, onContinue }: { initialName: string; onContinue: (
   const [name, setName] = useState(initialName || '');
   return (
     <div style={{ minHeight: '100vh', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <button style={{ background: '#6C4DFF', color: '#fff', borderRadius: '16px', padding: '4px 16px', border: 'none', marginBottom: '24px', fontWeight: 500, fontSize: '12px' }}>✦ Intervue Poll</button>
+       <button
+  style={{
+    background: "linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%)",
+    color: "#fff",
+    borderRadius: "999px",      // makes it fully rounded like your screenshot
+    padding: "6px 18px",
+    border: "none",
+    fontWeight: 600,
+    fontSize: "13px",
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+    cursor: "pointer",
+     marginBottom: '10px'
+  }}
+>
+  <PiSparkleFill size={14} />
+  Intervue Poll
+</button>
       <h1 style={{ fontWeight: 400, fontSize: '2.5rem', marginBottom: '8px' }}>Let’s <span style={{ fontWeight: 700 }}>Get Started</span></h1>
       <div style={{  borderRadius: '6px', padding: '8px 16px', marginBottom: '32px', color: '#444', maxWidth: '480px', textAlign: 'center', fontSize: '1rem' }}>
         If you’re a student, you’ll be able to <b>submit your answers</b>, participate in live polls, and see how your responses compare with your classmates
@@ -34,7 +71,7 @@ const Lobby = ({ initialName, onContinue }: { initialName: string; onContinue: (
         style={{ marginBottom: '16px', background: '#F2F2F2', borderRadius: '6px', padding: '10px 16px', width: '320px', fontSize: '1rem', color: '#222', textAlign: 'left', border: 'none' }}
         placeholder="Enter your name"
       />
-      <button style={{ background: '#6C4DFF', color: '#fff', borderRadius: '24px', padding: '10px 40px', border: 'none', fontWeight: 600, fontSize: '1.1rem', cursor: 'pointer', marginTop: '16px' }} onClick={() => onContinue(name)}>Continue</button>
+      <button style={{ background: "linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%)",color: '#fff', borderRadius: '24px', padding: '10px 40px', border: 'none', fontWeight: 600, fontSize: '1.1rem', cursor: 'pointer', marginTop: '16px' }} onClick={() => onContinue(name)}>Continue</button>
     </div>
   );
 };
@@ -179,7 +216,7 @@ const StudentPage: React.FC = () => {
           ))}
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '24px', marginBottom: '8px' }}>
             <button
-              style={{ background: '#6C4DFF', color: '#fff', borderRadius: '24px', padding: '12px 40px', border: 'none', fontWeight: 600, fontSize: '1.1rem', cursor: selected === null || voted ? 'not-allowed' : 'pointer', opacity: voted ? 0.6 : 1 }}
+              style={{ background: "linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%)", color: '#fff', borderRadius: '24px', padding: '12px 40px', border: 'none', fontWeight: 600, fontSize: '1.1rem', cursor: selected === null || voted ? 'not-allowed' : 'pointer', opacity: voted ? 0.6 : 1 }}
               disabled={selected === null || voted}
               onClick={() => {
                 if (selected !== null && !voted) {

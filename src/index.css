@@ -29,5 +29,14 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Hide scrollbars but keep scrolling */
+.scroll-hide {
+  scrollbar-width: none; /* Firefox */
+}
+.scroll-hide::-webkit-scrollbar {
+  width: 0px; /* Chrome, Safari */
+  height: 0px;
+}
+
 @media (prefers-color-scheme: light) {
 }

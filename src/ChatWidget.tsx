@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { socket } from './lib/socket';
+import { BsChatRight } from "react-icons/bs";
 
 type Participant = { socketId: string; name: string; role?: string };
 
@@ -12,7 +13,20 @@ export default function ChatWidget({ role }: { role: 'TEACHER' | 'STUDENT' }) {
   const endRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const onMsg = (m: any) => setMessages(prev => [...prev, m]);
+    // hydrate messages for current session
+    const sessionId = typeof window !== 'undefined' ? localStorage.getItem('sessionId') : null;
+    if (sessionId) {
+      try {
+        const saved = JSON.parse(localStorage.getItem(`chat:${sessionId}`) || '[]');
+        if (Array.isArray(saved)) setMessages(saved);
+      } catch {}
+    }
+    const onMsg = (m: any) => setMessages(prev => {
+      const next = [...prev, m];
+      const sid = typeof window !== 'undefined' ? localStorage.getItem('sessionId') : null;
+      if (sid) localStorage.setItem(`chat:${sid}`, JSON.stringify(next));
+      return next;
+    });
     const onParticipants = (list: Participant[]) => setParticipants(list);
     socket.on('chat:message', onMsg);
     socket.on('participants:update', onParticipants);
@@ -39,7 +53,12 @@ export default function ChatWidget({ role }: { role: 'TEACHER' | 'STUDENT' }) {
         style={{ position: 'fixed', right: 24, bottom: 24, width: 48, height: 48, borderRadius: 24, background: '#6C4DFF', color: '#fff', border: 'none', cursor: 'pointer', boxShadow: '0 6px 20px rgba(0,0,0,0.2)' }}
         aria-label="Open chat"
       >
-        💬
+        <BsChatRight size={22} 
+  style={{ 
+    fontWeight: "bold", // not always effective, but safe
+    marginLeft: "12px"  // moves it a bit left
+  }} />
+
       </button>
     );
   }

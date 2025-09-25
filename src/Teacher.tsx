@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { socket } from './lib/socket';
 import { useNavigate } from 'react-router-dom';
+import { IoEye } from "react-icons/io5";
 
 const TeacherPage: React.FC = () => {
   const navigate = useNavigate();
@@ -78,7 +79,9 @@ const TeacherPage: React.FC = () => {
             style={{ float: 'right', background: '#6C4DFF', color: '#fff', borderRadius: '16px', padding: '8px 24px', border: 'none', marginBottom: '24px', fontWeight: 500, fontSize: '1rem', cursor: 'pointer' }}
             onClick={() => sessionId && navigate('/teacher/history', { state: { sessionId } })}
           >
-            View Poll History
+
+<IoEye />
+View Poll History11
           </button>
           <h1 style={{ fontWeight: 400, fontSize: '2.5rem', marginBottom: '8px' }}>Let’s <span style={{ fontWeight: 700 }}>Get Started</span></h1>
           <div style={{ color: '#444', fontSize: '1rem', marginBottom: '32px' }}>
@@ -136,7 +139,8 @@ const TeacherPage: React.FC = () => {
           style={{ float: 'right', background: '#6C4DFF', color: '#fff', borderRadius: '16px', padding: '8px 24px', border: 'none', marginBottom: '24px', fontWeight: 500, fontSize: '1rem', cursor: 'pointer' }}
           onClick={() => sessionId && navigate('/teacher/history', { state: { sessionId } })}
         >
-          View Poll History
+          <IoEye size={20}/>
+          View Poll History11
         </button>
         <div style={{ marginBottom: '24px', fontWeight: 700, fontSize: '1.2rem' }}>Question</div>
         <div style={{ background: 'linear-gradient(90deg, #444 60%, #888 100%)', color: '#fff', borderRadius: '8px 8px 0 0', padding: '16px', fontWeight: 600, fontSize: '1.1rem', marginBottom: '0' }}>

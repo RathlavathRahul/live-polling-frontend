@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { socket } from './lib/socket';
 import { PulseLoader } from 'react-spinners';
+import {  PiSparkleFill } from "react-icons/pi";
+import { IoEye } from "react-icons/io5";
 
 const TeacherForm: React.FC = () => {
   const navigate = useNavigate();
@@ -41,7 +43,10 @@ const TeacherForm: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ teacherName }),
       })
-        .then(res => res.json())
+        .then(async (res) => {
+          if (!res.ok) throw new Error('Failed to create session');
+          return res.json();
+        })
         .then(data => {
           const id = data.session.id as string;
           setSessionId(id);
@@ -82,15 +87,36 @@ const TeacherForm: React.FC = () => {
   return (
     <div style={{ minHeight: '100vh', background: '#fff', paddingTop: '40px' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto', background: '#fff', borderRadius: '0', padding: '0 0 0 0' }}>
-        <button style={{ background: '#6C4DFF', color: '#fff', borderRadius: '16px', padding: '4px 16px', border: 'none', marginBottom: '24px', fontWeight: 500, fontSize: '12px' }}>✦ Intervue Poll</button>
+      <button
+  style={{
+    background: "linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%)",
+    color: "#fff",
+    borderRadius: "999px",      // makes it fully rounded like your screenshot
+    padding: "6px 18px",
+    border: "none",
+    fontWeight: 600,
+    fontSize: "13px",
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+    cursor: "pointer",
+     marginBottom: '10px'
+  }}
+>
+  <PiSparkleFill size={14} />
+  Intervue Poll
+</button>
         <button
-          style={{ float: 'right', background: '#6C4DFF', color: '#fff', borderRadius: '16px', padding: '8px 24px', border: 'none', marginBottom: '24px', fontWeight: 500, fontSize: '1rem', cursor: viewHistoryLoading ? 'not-allowed' : 'pointer', opacity: viewHistoryLoading ? 0.6 : 1 }}
+          style={{ float: 'right', background: '#8F64E1', color: '#fff', borderRadius: '16px', padding: '8px 24px', border: 'none', marginBottom: '24px', fontWeight: 500, fontSize: '1rem', cursor: viewHistoryLoading ? 'not-allowed' : 'pointer', display: "flex",          // make flexbox
+            alignItems: "center",     // center vertically
+            gap: "6px",       opacity: viewHistoryLoading ? 0.6 : 1 }}
           disabled={viewHistoryLoading}
           onClick={() => {
             setViewHistoryLoading(true);
             navigate('/teacher/pollhistory');
           }}
         >
+          <IoEye/>
           {viewHistoryLoading ? 'Loading…' : 'View Poll History'}
         </button>
         <h1 style={{ fontWeight: 400, fontSize: '2.5rem', marginBottom: '8px' }}>Let’s <span style={{ fontWeight: 700 }}>Get Started</span></h1>
@@ -138,8 +164,8 @@ const TeacherForm: React.FC = () => {
           <button
             onClick={askQuestion}
             disabled={asking || creatingSession || !question.trim() || options.filter(opt => opt.trim()).length < 2}
-            style={{ background: '#6C4DFF', color: '#fff', borderRadius: '24px', padding: '12px 40px', border: 'none', fontWeight: 600, fontSize: '1.1rem', cursor: asking || creatingSession ? 'not-allowed' : 'pointer', opacity: asking || creatingSession ? 0.7 : 1 }}>
-            {asking ? 'Asking…' : 'Ask Question'}
+            style={{   background: "linear-gradient(90deg, #8F64E1 0%, #1D68BD 100%)", color: '#fff', borderRadius: '24px', padding: '12px 40px', border: 'none', fontWeight: 600, fontSize: '1.1rem', cursor: asking || creatingSession ? 'not-allowed' : 'pointer', opacity: asking || creatingSession ? 0.7 : 1 }}>
+            {asking ? 'Asking…' : '+ Ask Question'}
           </button>
         </div>
       </div>

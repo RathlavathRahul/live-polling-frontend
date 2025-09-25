@@ -9,6 +9,7 @@ import Kicked from './Kicked';
 import ChatWidget from './ChatWidget';
 import { socket } from './lib/socket';
 import { useApp } from './store/app';
+import { PiSparkleFill } from "react-icons/pi";
 
 function RoleSelect() {
   const [selectedRole, setSelectedRole] = React.useState<'STUDENT' | 'TEACHER' | null>(null);
@@ -16,29 +17,92 @@ function RoleSelect() {
   const setRole = useApp(s => s.setRole);
   return (
     <div style={{ minHeight: '100vh', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <button style={{ background: '#6C4DFF', color: '#fff', borderRadius: '16px', padding: '4px 16px', border: 'none', marginBottom: '24px', fontWeight: 500, fontSize: '12px' }}>✦ Intervue Poll</button>
+   <button
+  style={{
+    background: "linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%)",
+    color: "#fff",
+    borderRadius: "999px",      // makes it fully rounded like your screenshot
+    padding: "6px 18px",
+    border: "none",
+    fontWeight: 600,
+    fontSize: "13px",
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+    cursor: "pointer",
+     marginBottom: '8px'
+  }}
+>
+  <PiSparkleFill size={14} />
+  Intervue Poll
+</button>
       <h1 style={{ fontWeight: 400, fontSize: '2.5rem', marginBottom: '8px' }}>Welcome to the <span style={{ fontWeight: 700 }}>Live Polling System</span></h1>
       <div style={{ marginBottom: '40px', color: '#444', fontSize: '1rem', textAlign: 'center' }}>
         Please select the role that best describes you to begin using the live polling system
       </div>
-      <div style={{ display: 'flex', gap: '32px', marginBottom: '24px' }}>
-        <div
-          style={{ border: selectedRole === 'STUDENT' ? '2px solid #6C4DFF' : '2px solid #eee', borderRadius: '12px', padding: '24px', cursor: 'pointer', width: '200px', background: '#fafaff' }}
-          onClick={() => setSelectedRole('STUDENT')}
-        >
-          <h2 style={{ fontWeight: 600, fontSize: '1.2rem' }}>I'm a Student</h2>
-          <p style={{ fontSize: '0.95rem', color: '#666' }}>Submit answers, participate in live polls, and compare responses.</p>
-        </div>
-        <div
-          style={{ border: selectedRole === 'TEACHER' ? '2px solid #6C4DFF' : '2px solid #eee', borderRadius: '12px', padding: '24px', cursor: 'pointer', width: '200px', background: '#fafaff' }}
-          onClick={() => setSelectedRole('TEACHER')}
-        >
-          <h2 style={{ fontWeight: 600, fontSize: '1.2rem' }}>I'm a Teacher</h2>
-          <p style={{ fontSize: '0.95rem', color: '#666' }}>Create polls, ask questions, and monitor responses.</p>
-        </div>
-      </div>
+      <div style={{ display: "flex", gap: "32px", marginBottom: "24px" }}>
+  {/* Student Box */}
+  <div
+    style={{
+      border:
+        selectedRole === "STUDENT"
+          ? "2px solid transparent"
+          : "2px solid #E5E7EB",
+      borderRadius: "16px",
+      padding: "28px 32px",
+      cursor: "pointer",
+      flex: 1, // makes them grow evenly instead of fixed square
+      maxWidth: "314px",
+      maxHeight:"143px",
+      background: selectedRole === "STUDENT"
+        ? "linear-gradient(#fff, #fff) padding-box, linear-gradient(90deg, #7565D9, #4D0ACD) border-box"
+        : "#fff",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+      transition: "all 0.2s ease",
+    }}
+    onClick={() => setSelectedRole("STUDENT")}
+  >
+    <h2 style={{ fontWeight: 600, fontSize: "1.1rem", marginBottom: "8px" }}>
+      I'm a Student
+    </h2>
+    <p style={{ fontSize: "0.95rem", color: "#444", lineHeight: "1.4" }}>
+      Submit answers, participate in live polls, and compare responses.
+    </p>
+  </div>
+
+  {/* Teacher Box */}
+  <div
+    style={{
+      border:
+        selectedRole === "TEACHER"
+          ? "2px solid transparent"
+          : "2px solid #E5E7EB",
+      borderRadius: "16px",
+      padding: "28px 32px",
+      cursor: "pointer",
+      flex: 1,
+      maxWidth: "314px",
+      maxHeight:"143px",
+      background: selectedRole === "TEACHER"
+        ? "linear-gradient(#fff, #fff) padding-box, linear-gradient(90deg, #7565D9, #4D0ACD) border-box"
+        : "#fff",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+      transition: "all 0.2s ease",
+    }}
+    
+    onClick={() => setSelectedRole("TEACHER")}
+  >
+    <h2 style={{ fontWeight: 600, fontSize: "1.1rem", marginBottom: "8px" }}>
+      I'm a Teacher
+    </h2>
+    <p style={{ fontSize: "0.95rem", color: "#444", lineHeight: "1.4" }}>
+      Create polls, ask questions, and monitor responses.
+    </p>
+  </div>
+</div>
+
       <button
-        style={{ background: '#6C4DFF', color: '#fff', borderRadius: '24px', padding: '10px 40px', border: 'none', fontWeight: 600, fontSize: '1.1rem', cursor: selectedRole ? 'pointer' : 'not-allowed', opacity: selectedRole ? 1 : 0.5 }}
+        style={{  background: "linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%)", color: '#fff', borderRadius: '24px', padding: '10px 40px', border: 'none', fontWeight: 600, fontSize: '1.1rem', cursor: selectedRole ? 'pointer' : 'not-allowed', opacity: selectedRole ? 1 : 0.5 }}
         disabled={!selectedRole}
         onClick={() => {
           if (!selectedRole) return;

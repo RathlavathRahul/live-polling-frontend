@@ -32,8 +32,11 @@ type AppState = {
   clearHistory: () => void;
 };
 
+const initialRole =
+  typeof window !== "undefined" ? (localStorage.getItem("role") as any) : null;
+
 export const useApp = create<AppState>((set) => ({
-  role: null,
+  role: initialRole ?? null,
   userId: null,
   name: "",
   activePoll: null,
@@ -41,7 +44,13 @@ export const useApp = create<AppState>((set) => ({
   chatEnabled: false,
   joined: false,
   pollHistory: [],
-  setRole: (role) => set({ role }),
+  setRole: (role) => {
+    if (typeof window !== "undefined") {
+      if (role) localStorage.setItem("role", role);
+      else localStorage.removeItem("role");
+    }
+    set({ role });
+  },
   setUser: (userId, name) => set({ userId, name }),
   setActivePoll: (activePoll) => set({ activePoll }),
   setResults: (results) => set({ results }),

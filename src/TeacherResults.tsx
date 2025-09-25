@@ -69,20 +69,20 @@ const TeacherResults: React.FC = () => {
 
   if (!poll) {
     return (
-      <div style={{ minHeight: '100vh', background: '#fff', paddingTop: '40px' }}>
-        <div style={{ maxWidth: '540px', margin: '0 auto', background: '#fff', borderRadius: '12px', padding: '0' }}>
-          <button
-            style={{ float: 'right', background: '#6C4DFF', color: '#fff', borderRadius: '16px', padding: '8px 24px', border: 'none', marginBottom: '24px', fontWeight: 500, fontSize: '1rem', cursor: !sessionId || viewHistoryLoading ? 'not-allowed' : 'pointer', opacity: !sessionId || viewHistoryLoading ? 0.6 : 1 }}
-            disabled={!sessionId || viewHistoryLoading}
-            onClick={() => {
-              if (!sessionId) return;
-              setViewHistoryLoading(true);
-              navigate('/teacher/pollhistory');
-            }}
-          >
-            {viewHistoryLoading ? 'Loading…' : 'View Poll History'}
-          </button>
-          <div style={{ marginBottom: '24px', fontWeight: 700, fontSize: '1.2rem' }}>Waiting for question…</div>
+      <div style={{ minHeight: '100vh', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '32px 16px' }}>
+        <button
+          style={{ position: 'fixed', top: 24, right: 24, background: '#6C4DFF', color: '#fff', borderRadius: '16px', padding: '8px 24px', border: 'none', fontWeight: 500, fontSize: '1rem', cursor: !sessionId || viewHistoryLoading ? 'not-allowed' : 'pointer', opacity: !sessionId || viewHistoryLoading ? 0.6 : 1 }}
+          disabled={!sessionId || viewHistoryLoading}
+          onClick={() => {
+            if (!sessionId) return;
+            setViewHistoryLoading(true);
+            navigate('/teacher/pollhistory');
+          }}
+        >
+          {viewHistoryLoading ? 'Loading…' : 'View Poll History'}
+        </button>
+        <div style={{ width: '100%', maxWidth: 820, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ marginBottom: '12px', fontWeight: 700, fontSize: '1.25rem', color: '#111' }}>Waiting for question…</div>
           <div style={{ color: '#6C4DFF', fontWeight: 600 }}>Publish a question from the form to start.</div>
         </div>
       </div>
@@ -90,18 +90,19 @@ const TeacherResults: React.FC = () => {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fff', paddingTop: '40px' }}>
-      <div style={{ maxWidth: '540px', margin: '0 auto', background: '#fff', borderRadius: '12px', padding: '0' }}>
-        <button
-          style={{ float: 'right', background: '#6C4DFF', color: '#fff', borderRadius: '16px', padding: '8px 24px', border: 'none', marginBottom: '24px', fontWeight: 500, fontSize: '1rem', cursor: viewHistoryLoading ? 'not-allowed' : 'pointer', opacity: viewHistoryLoading ? 0.6 : 1 }}
-          disabled={viewHistoryLoading}
-          onClick={() => {
-            setViewHistoryLoading(true);
-            navigate('/teacher/pollhistory');
-          }}
-        >
-          {viewHistoryLoading ? 'Loading…' : 'View Poll History'}
-        </button>
+    <div style={{ minHeight: '100vh', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 16px' }}>
+      <button
+        style={{ position: 'fixed', top: 24, right: 24, background: '#6C4DFF', color: '#fff', borderRadius: '16px', padding: '8px 24px', border: 'none', fontWeight: 500, fontSize: '1rem', cursor: viewHistoryLoading ? 'not-allowed' : 'pointer', opacity: viewHistoryLoading ? 0.6 : 1 }}
+        disabled={viewHistoryLoading}
+        onClick={() => {
+          setViewHistoryLoading(true);
+          navigate('/teacher/pollhistory');
+        }}
+      >
+        {viewHistoryLoading ? 'Loading…' : 'View Poll History'}
+      </button>
+      <div style={{ width: '100%', maxWidth: 820, margin: '0 auto' }}>
+        <div style={{ fontWeight: 700, fontSize: '1.1rem', color: '#1F2937', margin: '0 0 10px 4px' }}>Question</div>
         <div style={{ marginBottom: 16 }}>
           <QuestionCard
             question={poll.question}
@@ -112,9 +113,8 @@ const TeacherResults: React.FC = () => {
             }))}
           />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px', marginBottom: '8px', gap: '12px' }}>
-            {/* Removed End Poll button as requested */}
-            <button style={{ background: '#6C4DFF', color: '#fff', borderRadius: '24px', padding: '12px 32px', border: 'none', fontWeight: 600, fontSize: '1.1rem', cursor: 'pointer' }} onClick={() => navigate('/teacher/forms')}>+ Ask a new question</button>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+          <button style={{ background: '#6C4DFF', color: '#fff', borderRadius: '24px', padding: '12px 32px', border: 'none', fontWeight: 600, fontSize: '1.1rem' }} onClick={() => navigate('/teacher/forms')}>+ Ask a new question</button>
         </div>
       </div>
     </div>
